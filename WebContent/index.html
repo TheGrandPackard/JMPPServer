@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chat Room</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="resources/styles.css" type="text/css"/>
+        <script src="resources/chat.js"></script>
+        <!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">		
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">		
+    </head>
+    <body onload="connect();" onunload="disconnect();">
+        <h1> Chat Room </h1>
+        <textarea id="messages" class="panel message-area" disabled="true"></textarea>
+        <div class="panel input-area">
+            <input id="messageInput" class="text-field" type="text" placeholder="Message"
+                   onkeydown="if (event.keyCode == 13) sendChatMessage();" />
+            <input class="button" type="submit" value="Send" onclick="sendChatMessage();" />
+        </div>
+        <!-- Modal -->
+		<div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+		      </div>
+		      <div class="modal-body">
+	        	<div class="form-group">
+				  <label for="displayName">Display Name</label>
+				  <input type="email" class="form-control" id="displayName" placeholder="Display Name">
+				</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary" onclick="doAuth()">Login</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>	
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="resources/bootstrap.min.js"></script>
+    
+    <script>
+  	  $('#authModal').modal('show');
+  	  
+  	  function doAuth()
+  	  {
+  		  var displayName = $('#displayName').val().trim();
+  		  var identifier = guid();
+  		  
+  		  console.log("Do auth for " + $('#displayName').val() +" (" + identifier + ")");
+  		  sendAuth(displayName, identifier);
+  	  }
+  	  
+      function guid() {
+  	    function s4() {
+  	      return Math.floor((1 + Math.random()) * 0x10000)
+  	        .toString(16)
+  	        .substring(1);
+  	    }
+  	    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+  	      s4() + '-' + s4() + s4() + s4();
+  	  }
+    </script>
+    </body>
+</html>
